@@ -4,6 +4,9 @@ using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
 
+Console.WriteLine("Please provide the path to the solution root");
+Console.WriteLine();
+var path = Console.ReadLine();
 // Create an MSBuild workspace
 if (!MSBuildLocator.IsRegistered)
     MSBuildLocator.RegisterDefaults();
@@ -11,12 +14,12 @@ if (!MSBuildLocator.IsRegistered)
 var workspace = MSBuildWorkspace.Create();
 
 // Open the solution
-var solutionPath = "../../../../mermaid_plot.sln";
-var solution = await workspace.OpenSolutionAsync(solutionPath);
+var solution = await workspace.OpenSolutionAsync(path);
 
 // Iterate over all projects in the solution
 foreach (Project project in solution.Projects)
 {
+    Compilation? compilation = await project.GetCompilationAsync();
     Console.WriteLine($"Project: {project.Name}");
     project.AllProjectReferences.ToList().ForEach(x =>
     {
@@ -27,3 +30,4 @@ foreach (Project project in solution.Projects)
         Console.WriteLine($"{project_ref.Name}");
     });
 }
+// workspace.CurrentSolution.GetProject(projectId);
