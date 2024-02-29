@@ -12,8 +12,8 @@ namespace Application
     public async Task<string> Chat(string systemPrompt, string userPrompt)
     {
       OpenAIClient client = new OpenAIClient(
-        new Uri(""),
-        new AzureKeyCredential(""));
+        new Uri("https://isp-openai-test-swe.openai.azure.com/"),
+        new AzureKeyCredential("b12a2eff87ec4318919795a0f3c6d1e5"));
 
       Response<ChatCompletions> responseWithoutStream = await client.GetChatCompletionsAsync(
       "Gpt4",
