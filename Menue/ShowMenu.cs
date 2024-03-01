@@ -2,7 +2,7 @@
 
 namespace Application
 {
-    internal class ShowMenu
+    public class ShowMenu
     {
         public static int Menu(string prompt, string[] options)
         {

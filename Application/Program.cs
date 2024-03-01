@@ -14,13 +14,11 @@ while (true)
     var path = "";
     var diagram_graph = "";
 
-
     int starMenue = ShowMenu.Menu("Solution graph", new[]
     {
                     "Select solution",
 
                     "Exit"
-
                 });
     if (starMenue == 0)
     {
@@ -33,12 +31,11 @@ while (true)
         Console.WriteLine("Please provide the graph to create");
         Console.WriteLine();
         int selectGraph = ShowMenu.Menu("Select graph", new[]
-   {
+    {
                     "Graph",
-                    "Class diagram",
+                    "Class",
 
                     "Exit"
-
                 });
         if (selectGraph == 0)
         {
@@ -52,19 +49,21 @@ while (true)
         {
         }
     }
-
     else
     {
         Environment.Exit(0);
     }
 
+    Console.Clear();
 
-
-
+    Console.WriteLine($"Selected diagram {diagram_graph}");
+    Console.WriteLine();
+    Console.WriteLine("AI is working very hard!");
+    Console.WriteLine();
 
     // Create an MSBuild workspace
     if (!MSBuildLocator.IsRegistered)
-      MSBuildLocator.RegisterDefaults();
+        MSBuildLocator.RegisterDefaults();
 
     var workspace = MSBuildWorkspace.Create();
 
@@ -76,24 +75,24 @@ while (true)
     var list = new List<ProjectItem>();
     foreach (ProjectId projectId in graph.GetTopologicallySortedProjects())
     {
-      var project = solution.Projects.First(p => p.Id == projectId);
-      var children = new List<ChildProject>();
-      var references = new List<DllReference>();
-      project.MetadataReferences.Where(x => x.Display.Contains("Hogia")).ToList().ForEach(x =>
-      {
-        int index = x.Display.IndexOf("Hogia");
-        if (index >= 0)
+        var project = solution.Projects.First(p => p.Id == projectId);
+        var children = new List<ChildProject>();
+        var references = new List<DllReference>();
+        project.MetadataReferences.Where(x => x.Display.Contains("Hogia")).ToList().ForEach(x =>
         {
-          string result = x.Display.Substring(index + "Hogia.".Length);
-          references.Add(new DllReference { ReferenceName = result });
-        }
-      });
-      project.AllProjectReferences.ToList().ForEach(x =>
-      {
-        var project_ref = solution.Projects.First(p => p.Id == x.ProjectId);
-        children.Add(new ChildProject { ProjectName = project_ref.Name });
-      });
-      list.Add(new ProjectItem { ProjectName = project.Name, References = references, Children = children });
+            int index = x.Display.IndexOf("Hogia");
+            if (index >= 0)
+            {
+                string result = x.Display.Substring(index + "Hogia.".Length);
+                references.Add(new DllReference { ReferenceName = result });
+            }
+        });
+        project.AllProjectReferences.ToList().ForEach(x =>
+        {
+            var project_ref = solution.Projects.First(p => p.Id == x.ProjectId);
+            children.Add(new ChildProject { ProjectName = project_ref.Name });
+        });
+        list.Add(new ProjectItem { ProjectName = project.Name, References = references, Children = children });
     }
     string solutionFilePath = solution.FilePath;
 
@@ -106,22 +105,28 @@ while (true)
     var projectWrapper = new SolutionModel { SolutionName = solutionName, Projects = list };
 
     var prompt = @$"
-    Input: A JSON file representing a C# solution with projects and their references.
+Input: A JSON file representing a C# solution with projects and the project references to other packages.
 
-    Output: {diagram_graph} visualizing the relationships between the projects in the solution using mermaid diagrams.
+Output: {diagram_graph} diagram visualizing the relationships between the projects in the solution and display the references the project has to other packages using mermaid diagrams.
 
     Additional Notes:
 
-    The diagram should use appropriate notation to represent the relationships between projects (e.g., directed arrows for dependencies).
-    Consider including project names and other relevant information within the  shapes.
-    You are going to use mermaid diagram to generate the output.
-    The output should always start with ``` mermaid and end with ```
+The diagram should use appropriate notation to represent the relationships between projects (e.g., directed arrows for dependencies).
+Consider including project names and project references and other relevant information within the  shapes.
+You are going to use mermaid {diagram_graph} diagram to generate the output.
+The output should always start with ``` mermaid and end with ```
+Make sure when using class diagram to not use . in names for the classes since its not supported but the properties of the class can have dots. .
 
-    For example: ``` mermaid {{Content here}} ``` 
-    ";
+For example: ```mermaid {{Content here}} ```
+";
 
     string userPrompt = JsonSerializer.Serialize(projectWrapper);
     var result = await new OpenAI().Chat(prompt, userPrompt.Replace(" ", ""));
 
-    File.WriteAllText($@"C:\Users\anton.patron\Desktop\result{diagram_graph}.md", result);
+    Console.WriteLine("Finished");
+    Console.WriteLine();
+
+    Console.WriteLine("Provide the path to save the file");
+    var filePath = Console.ReadLine();
+    File.WriteAllText($@"{filePath}\{solutionName}.{diagram_graph}.{DateTime.UtcNow.Ticks}.md", result);
 }

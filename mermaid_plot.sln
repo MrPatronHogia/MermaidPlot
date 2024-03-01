@@ -5,13 +5,15 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{0F5BA766-0A15-47B6-80F3-048B9C22646F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "Parser\Parser.csproj", "{956663A7-A066-4080-AAA3-6FA8ADB50CCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser", "Parser\Parser.csproj", "{956663A7-A066-4080-AAA3-6FA8ADB50CCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{60B295E2-6B0F-40A8-A3F7-844B500732AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{60B295E2-6B0F-40A8-A3F7-844B500732AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRelicApp", "NewRelicApp\NewRelicApp.csproj", "{D1906AE9-A3DF-4779-8B7F-8CF4E05EE2B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRelicApp", "NewRelicApp\NewRelicApp.csproj", "{D1906AE9-A3DF-4779-8B7F-8CF4E05EE2B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAi", "OpenAi\OpenAi.csproj", "{456E6CFC-2CDF-419D-9D81-937605DF060C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAi", "OpenAi\OpenAi.csproj", "{456E6CFC-2CDF-419D-9D81-937605DF060C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menue", "Menue\Menue.csproj", "{3E336272-A67B-46B2-B891-3E362A7819ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{456E6CFC-2CDF-419D-9D81-937605DF060C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{456E6CFC-2CDF-419D-9D81-937605DF060C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{456E6CFC-2CDF-419D-9D81-937605DF060C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E336272-A67B-46B2-B891-3E362A7819ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E336272-A67B-46B2-B891-3E362A7819ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E336272-A67B-46B2-B891-3E362A7819ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E336272-A67B-46B2-B891-3E362A7819ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
