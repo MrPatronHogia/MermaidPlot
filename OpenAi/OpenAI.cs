@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using Azure;
 using Azure.AI.OpenAI;
 
@@ -12,8 +8,8 @@ namespace Application
     public async Task<string> Chat(string systemPrompt, string userPrompt)
     {
       OpenAIClient client = new OpenAIClient(
-        new Uri("https://isp-openai-test-swe.openai.azure.com/"),
-        new AzureKeyCredential("b12a2eff87ec4318919795a0f3c6d1e5"));
+        new Uri(""),
+        new AzureKeyCredential(""));
 
       Response<ChatCompletions> responseWithoutStream = await client.GetChatCompletionsAsync(
       "Gpt4",
